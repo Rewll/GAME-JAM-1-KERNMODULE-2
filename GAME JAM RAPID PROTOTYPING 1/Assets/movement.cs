@@ -9,12 +9,16 @@ public class movement : MonoBehaviour
     public float runSpeed = 10.0f;
     public float jumpHeight = 10.0f;
     public bool IsGrounded;
-
+    public SpriteRenderer SR;
+    public LineRenderer LR;
+    public Transform sword;
 
     // Start is called before the first frame update
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        SR = GetComponent<SpriteRenderer>();
+        LR = GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -27,10 +31,12 @@ public class movement : MonoBehaviour
         if (Input.GetKey(KeyCode.D))
         {
             pos.x += runSpeed * Time.deltaTime;
+            SR.flipX = false;
         }
         if (Input.GetKey(KeyCode.A))
         {
             pos.x -= runSpeed * Time.deltaTime;
+            SR.flipX = true;
         }
         transform.position = pos;
 
@@ -39,6 +45,10 @@ public class movement : MonoBehaviour
         {
             body.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
         }
+
+        LR.SetPosition(0, transform.position);
+        LR.SetPosition(1, sword.position);
+
     }
 
     void isgrounded()
