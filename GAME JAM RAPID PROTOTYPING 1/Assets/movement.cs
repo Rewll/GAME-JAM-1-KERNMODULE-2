@@ -19,6 +19,10 @@ public class movement : MonoBehaviour
     public LineRenderer LR;
     public Transform sword;
     public bool gameOver = false;
+    public bool gameWin = false;
+
+    public int circleAmount;
+    public bool winGame = false;
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +55,7 @@ public class movement : MonoBehaviour
         transform.position = pos;
 
 
-        if (Input.GetKeyDown(KeyCode.E) && IsGrounded)
+        if (Input.GetKeyDown(KeyCode.W) && IsGrounded)
         {
             body.AddForce(new Vector2(0, jumpHeight), ForceMode2D.Impulse);
         }
@@ -88,6 +92,23 @@ public class movement : MonoBehaviour
                 gameOver = true;
             }
         }
+
+        if (collision.transform.tag == "Circle")
+        {
+            Destroy(collision.gameObject);
+            circleAmount++;
+            if (circleAmount >= 3)
+            {
+                WinGame();
+            }
+        }
+    }
+
+    void WinGame()
+    {
+        Debug.Log("WIn");
+        gameWin = true;
+        Time.timeScale = 0;
     }
 
     private void OnGUI()
@@ -97,6 +118,12 @@ public class movement : MonoBehaviour
         {
             GUI.TextField(new Rect(100, 200, 300, 50), "YOUR END HAS COME", 30);
             if (GUI.Button(new Rect(100, 300, 300, 300), "RESTART"))
+                SceneManager.LoadScene(0);
+        }
+        if (gameWin)
+        {
+            GUI.TextField(new Rect(100, 200, 300, 50), "YOU ARE VICTORIOUS", 30);
+            if (GUI.Button(new Rect(100, 300, 100, 40), "RESTART"))
                 SceneManager.LoadScene(0);
         }
     }

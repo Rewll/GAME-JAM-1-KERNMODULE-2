@@ -48,7 +48,7 @@ public class sword : MonoBehaviour
             transform.position = pos;
         }
 
-        if (Input.GetKey(KeyCode.RightControl))
+        if (Input.GetKey(KeyCode.Slash))
         {
             if (!isrunning)
             {

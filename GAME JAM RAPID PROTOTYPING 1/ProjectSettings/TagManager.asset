@@ -8,6 +8,7 @@ TagManager:
   - Sword
   - Shuriken
   - Enemy
+  - Circle
   layers:
   - Default
   - TransparentFX
@@ -42,6 +43,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 928222475
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
