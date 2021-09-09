@@ -79,4 +79,20 @@ public class sword : MonoBehaviour
         col.enabled = false;
         isrunning = false;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.tag == "Shuriken")
+        {
+            Debug.Log("Destroying shuriken");
+            Destroy(collision.gameObject);
+        }
+        else if (collision.transform.tag == "Enemy")
+        {
+            Debug.Log("Destroying Enemy");
+            Destroy(collision.gameObject);
+        }
+
+    }
+
 }

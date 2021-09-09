@@ -5,7 +5,7 @@ using UnityEngine;
 public class spawner : MonoBehaviour
 {
     bool rightOrLeft;
-    public int enemyAmount;
+    public int enemyAmountStart;
     public Transform rightSpawnPos, leftSpawnPos;
     public GameObject enemyPrefab;
 
@@ -13,22 +13,23 @@ public class spawner : MonoBehaviour
     void Start()
     {
         StartCoroutine(spawnEnemy());
+
+        for (int i = 0; i < enemyAmountStart; i++)
+        {
+            Vector2 newPos = new Vector2(Random.Range(leftSpawnPos.position.x, rightSpawnPos.position.x), -2);
+            Instantiate(enemyPrefab, newPos, Quaternion.identity);
+        }
     }
+
+
 
     IEnumerator spawnEnemy()
     {
         for (int i = 0; i < Mathf.Infinity; i++)
         {
-            rightOrLeft = Random.value > 0.5f;
-            if (rightOrLeft)
-            {
-                Instantiate(enemyPrefab, rightSpawnPos.position, Quaternion.identity);
-            }
-            else if (!rightOrLeft)
-            {
-                Instantiate(enemyPrefab, leftSpawnPos.position, Quaternion.identity);
-            }
-            yield return new WaitForSeconds(3);
+            Vector2 newPos = new Vector2(Random.Range(leftSpawnPos.position.x, rightSpawnPos.position.x), -2);
+            Instantiate(enemyPrefab, newPos, Quaternion.identity);
+            yield return new WaitForSeconds(6);
         }
     }
 }
