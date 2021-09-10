@@ -24,6 +24,9 @@ public class movement : MonoBehaviour
     public int circleAmount;
     public bool winGame = false;
 
+    public GameObject winScreen;
+    public GameObject loseScreen;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -88,8 +91,7 @@ public class movement : MonoBehaviour
             Destroy(collision.gameObject);
             if (health <= 0)
             {
-                Time.timeScale = 0;
-                gameOver = true;
+                loseGame();
             }
         }
 
@@ -107,25 +109,30 @@ public class movement : MonoBehaviour
     void WinGame()
     {
         Debug.Log("WIn");
-        gameWin = true;
+        winScreen.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    void loseGame()
+    {
+        Debug.Log("Lose");
+        loseScreen.SetActive(true);
         Time.timeScale = 0;
     }
 
     private void OnGUI()
     {
         GUI.TextField(new Rect(10, 10, 60, 20), "HP: " + health.ToString(), 10);
-        if (gameOver)
-        {
-            GUI.TextField(new Rect(100, 200, 300, 50), "YOUR END HAS COME", 30);
-            if (GUI.Button(new Rect(100, 300, 300, 300), "RESTART"))
-                SceneManager.LoadScene(0);
-        }
-        if (gameWin)
-        {
-            GUI.TextField(new Rect(100, 200, 300, 50), "YOU ARE VICTORIOUS", 30);
-            if (GUI.Button(new Rect(100, 300, 100, 40), "RESTART"))
-                SceneManager.LoadScene(0);
-        }
+    }
+
+    public void restart()
+    {
+        SceneManager.LoadScene("Gameplay");
+    }
+
+    public void toMainMenu()
+    {
+        SceneManager.LoadScene("MainMenu");
     }
 
 }
