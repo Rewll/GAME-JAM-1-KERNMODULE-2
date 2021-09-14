@@ -6,6 +6,8 @@ public enum State { Attack, Patrol, death }
 
 public class flyingNinja : MonoBehaviour
 {
+    Transform player;
+    
     private Rigidbody2D rb2d;
     [Header("State Machine")]
     [SerializeField]
@@ -17,13 +19,18 @@ public class flyingNinja : MonoBehaviour
     public Transform wayPointLeft;
     public Transform wayPointRight;
     public float patrolSpeed = 2f;
-    public float speedMultiplier = -1f;
+    public float speedMultiplier = 1f;
+
+    [Header("Attack")]
+    public float attackSpeed = 2f;
+    public float attackRange;
 
     private void Awake()
     {
         CurrentState = StartState;
         transform.position = wayPointLeft.position;
         rb2d = GetComponent<Rigidbody2D>();
+        player = GameObject.FindWithTag("Player").transform;
     }
 
     private void FixedUpdate()
@@ -59,38 +66,48 @@ public class flyingNinja : MonoBehaviour
         CurrentState = newState;
     }
 
-
     void AttackBehaviour()
     {
+        float step = attackSpeed * Time.deltaTime;
 
+        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, step);
+        if (Vector3.Distance(transform.position, player.position) < 0.1f)
+        {
+            switchState(State.Patrol);
+        }
     }
 
     void PatrolBehaviour()
     {
         rb2d.velocity = new Vector2(patrolSpeed * speedMultiplier, 0);
+        checkPos();
+
+        if (Vector2.Distance(transform.position, player.transform.position) < attackRange)
+        {
+            switchState(State.Attack);
+        }
     }
 
     void onPatrolEnter()
     {
-        //speedcheck by checkin if x is bigger or smaller;
-        //speedcheck by checkin if x is bigger or smaller than waypoints and then reversing speed so that it bounces inbetween
+
     }
 
-
+    void checkPos()
+    {
+        if (transform.position.x < wayPointLeft.transform.position.x)
+        {
+            speedMultiplier = 1;
+        }
+        else if (transform.position.x > wayPointRight.transform.position.x)
+        {
+            speedMultiplier = -1;
+        }
+    }
 
 
     void DyingBehaviour()
     {
 
     }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag == "Waypoint")
-        {
-            speedMultiplier *= -1;
-            Debug.Log("BOINK");
-        }
-    }
-
 }
