@@ -9,6 +9,7 @@ TagManager:
   - Shuriken
   - Enemy
   - Circle
+  - Waypoint
   layers:
   - Default
   - TransparentFX

@@ -84,12 +84,12 @@ public class sword : MonoBehaviour
     {
         if (collision.transform.tag == "Shuriken")
         {
-            Debug.Log("Destroying shuriken");
+            Debug.Log("Destroying: " + collision.transform.gameObject.name);
             Destroy(collision.gameObject);
         }
         else if (collision.transform.tag == "Enemy")
         {
-            Debug.Log("Destroying Enemy");
+            Debug.Log("Destroying: " + collision.transform.gameObject.name);
             Destroy(collision.gameObject);
         }
 
