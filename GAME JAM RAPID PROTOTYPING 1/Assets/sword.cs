@@ -73,6 +73,7 @@ public class sword : MonoBehaviour
     {
         isrunning = true;
         col.enabled = true;
+        AudioManager.Instance.Play("KatanaSlash");
         transform.eulerAngles = new Vector3(0, 0, sliceAngle);
         yield return new WaitForSeconds(sliceTime);
         transform.eulerAngles = new Vector3(0, 0, 0);
@@ -84,15 +85,21 @@ public class sword : MonoBehaviour
     {
         if (collision.transform.tag == "Shuriken")
         {
-            Debug.Log("Destroying: " + collision.transform.gameObject.name);
+            //Debug.Log("Destroying: " + collision.transform.gameObject.name);
             Destroy(collision.gameObject);
         }
         else if (collision.transform.tag == "Enemy")
         {
-            Debug.Log("Destroying: " + collision.transform.gameObject.name);
+            AudioManager.Instance.Play("Blood");
+            //Debug.Log("Destroying: " + collision.transform.gameObject.name);
             Destroy(collision.gameObject);
         }
+        else if (collision.gameObject.GetComponent<flyingNinja>() != null)
+        {
+            AudioManager.Instance.Play("Blood");
+            //Debug.Log("Destroying: " + collision.transform.gameObject.name);
+            Destroy(collision.gameObject);
 
+        }
     }
-
 }

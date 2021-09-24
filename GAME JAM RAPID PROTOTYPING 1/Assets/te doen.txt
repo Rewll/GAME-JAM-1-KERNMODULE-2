@@ -1,10 +1,14 @@
 Laatste polish:
-UI canvas
-Vliegende enemy en ondegrondse enemy
+
+
 Level design
-Geluid
-Start scherm + pauze scherm + mute knop + help knop + health bar
 
-Ideeen:
 
-ondergronds stuk met specifieke enemies	
+Help scherm invullen
+
+Links:
+
+https://freesound.org/people/LittleRobotSoundFactory/sounds/270403/
+https://freesound.org/people/LittleRobotSoundFactory/sounds/270402/
+https://freesound.org/people/Kreastricon62/sounds/323526/#comments
+https://freesound.org/people/PorkMuncher/sounds/263595/

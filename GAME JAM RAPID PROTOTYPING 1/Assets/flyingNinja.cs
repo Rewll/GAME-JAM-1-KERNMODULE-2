@@ -7,7 +7,8 @@ public enum State { Attack, Patrol, death }
 public class flyingNinja : MonoBehaviour
 {
     Transform player;
-    
+    public float playerDist;
+
     private Rigidbody2D rb2d;
     [Header("State Machine")]
     [SerializeField]
@@ -23,14 +24,24 @@ public class flyingNinja : MonoBehaviour
 
     [Header("Attack")]
     public float attackSpeed = 2f;
+    private float attackSpeedMultiplier = 0.1f;
     public float attackRange;
+    public float patrolRange;
+    Vector3 attackDirection;
 
-    private void Awake()
+    private void Start()
     {
-        CurrentState = StartState;
-        transform.position = wayPointLeft.position;
         rb2d = GetComponent<Rigidbody2D>();
-        player = GameObject.FindWithTag("Player").transform;
+        player = AudioManager.Instance.Player.transform;
+        wayPointLeft = AudioManager.Instance.wayPointLeft;
+        wayPointRight = AudioManager.Instance.wayPointRight;
+
+        CurrentState = StartState;
+    }
+
+    private void Update()
+    {
+        playerDist = Vector2.Distance(transform.position, player.transform.position);
     }
 
     private void FixedUpdate()
@@ -54,6 +65,7 @@ public class flyingNinja : MonoBehaviour
         switch (newState) 
         {
             case State.Attack:
+                onAttackEnter();
                 break;
 
             case State.Patrol:
@@ -68,10 +80,8 @@ public class flyingNinja : MonoBehaviour
 
     void AttackBehaviour()
     {
-        float step = attackSpeed * Time.deltaTime;
-
-        transform.position = Vector2.MoveTowards(transform.position, player.transform.position, step);
-        if (Vector3.Distance(transform.position, player.position) < 0.1f)
+        rb2d.AddForce(attackDirection * attackSpeed * attackSpeedMultiplier, ForceMode2D.Impulse);
+        if (playerDist > patrolRange)
         {
             switchState(State.Patrol);
         }
@@ -82,11 +92,17 @@ public class flyingNinja : MonoBehaviour
         rb2d.velocity = new Vector2(patrolSpeed * speedMultiplier, 0);
         checkPos();
 
-        if (Vector2.Distance(transform.position, player.transform.position) < attackRange)
+        if (playerDist < attackRange)
         {
             switchState(State.Attack);
         }
     }
+
+    void onAttackEnter()
+    {
+        attackDirection = player.position - transform.position;
+    }
+
 
     void onPatrolEnter()
     {
