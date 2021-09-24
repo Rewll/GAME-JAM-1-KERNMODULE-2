@@ -1,0 +1,10 @@
+Laatste polish:
+UI canvas
+Vliegende enemy en ondegrondse enemy
+Level design
+Geluid
+Start scherm + pauze scherm + mute knop + help knop + health bar
+
+Ideeen:
+
+ondergronds stuk met specifieke enemies	
