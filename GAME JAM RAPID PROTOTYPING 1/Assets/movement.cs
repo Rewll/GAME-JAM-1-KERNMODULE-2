@@ -94,28 +94,6 @@ public class movement : MonoBehaviour
         LR.SetPosition(0, transform.position);
         LR.SetPosition(1, sword.position);
 
-    }
-
-    void isgrounded()
-    {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1.23f, LayerMask.GetMask("Ground"));
-        Debug.DrawRay(transform.position, Vector2.down * 1.23f, Color.magenta);
-        //Debug.Log(hit.transform.gameObject.name);
-        if (hit)
-        {
-            IsGrounded = true;
-        }
-        else if (!hit)
-        {
-            IsGrounded = false;
-        }
-    }
-
-    void movePlayer()
-    {
-        Vector2 v2GroundedBoxCheckPosition = (Vector2)transform.position + new Vector2(0, -0.01f);
-        Vector2 v2GroundedBoxCheckScale = (Vector2)transform.localScale + new Vector2(-0.02f, 0);
-
         fGroundedRemember -= Time.deltaTime;
         if (IsGrounded)
         {
@@ -142,6 +120,30 @@ public class movement : MonoBehaviour
             fGroundedRemember = 0;
             rigid.velocity = new Vector2(rigid.velocity.x, fJumpVelocity);
         }
+
+    }
+
+    void isgrounded()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, 1.23f, LayerMask.GetMask("Ground"));
+        Debug.DrawRay(transform.position, Vector2.down * 1.23f, Color.magenta);
+        //Debug.Log(hit.transform.gameObject.name);
+        if (hit)
+        {
+            IsGrounded = true;
+        }
+        else if (!hit)
+        {
+            IsGrounded = false;
+        }
+    }
+
+    void movePlayer()
+    {
+        Vector2 v2GroundedBoxCheckPosition = (Vector2)transform.position + new Vector2(0, -0.01f);
+        Vector2 v2GroundedBoxCheckScale = (Vector2)transform.localScale + new Vector2(-0.02f, 0);
+
+
 
         float fHorizontalVelocity = rigid.velocity.x;
         fHorizontalVelocity += Input.GetAxisRaw("Horizontal");
@@ -195,7 +197,7 @@ public class movement : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<flyingNinja>() != null)
         {
-            health -= damage;
+            health -= damage + 3;
             AudioManager.Instance.Play("OUCH");
             healthBar.SetHealth(health);
             if (health <= 0)
@@ -234,6 +236,8 @@ public class movement : MonoBehaviour
 
     public void toMainMenu()
     {
-        SceneManager.LoadScene("MainMenu");
+        SceneManager.LoadScene("Main Menu");
     }
+
+    // raoul is kinda cute UwU
 }

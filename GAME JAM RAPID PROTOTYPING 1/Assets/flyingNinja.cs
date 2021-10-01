@@ -120,7 +120,7 @@ public class flyingNinja : MonoBehaviour
         }
         else if (transform.position.x > wayPointRight.transform.position.x)
         {
-            speedMultiplier = 1;
+            speedMultiplier = -1;
             sp.flipX = true;
         }
     }
@@ -130,4 +130,5 @@ public class flyingNinja : MonoBehaviour
     {
 
     }
+
 }

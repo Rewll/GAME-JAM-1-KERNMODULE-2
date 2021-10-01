@@ -103,7 +103,7 @@ MonoBehaviour:
   CurrentState: 0
   wayPointLeft: {fileID: 0}
   wayPointRight: {fileID: 0}
-  patrolSpeed: 2
+  patrolSpeed: 3
   speedMultiplier: -1
   attackSpeed: 0.1
   attackRange: 5
