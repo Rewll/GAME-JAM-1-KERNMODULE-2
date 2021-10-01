@@ -9,13 +9,13 @@ public class EnemySpawn : MonoBehaviour
     public int min, max;
     public bool flying;
 
-
     void spawnFlyEnemy(int min, int max, GameObject prefab, Transform left, Transform right)
     {
         int enemyAmount = Random.Range(min, max);
         for (int i = 0; i < enemyAmount; i++)
         {
             Vector2 newPos;
+            GameObject newFlyingNinja = null;
             bool rightOrLeft = (Random.value > 0.5f);
             if (rightOrLeft)
             {
@@ -26,7 +26,14 @@ public class EnemySpawn : MonoBehaviour
                 newPos.x = right.position.x;
             }
             newPos.y = Random.Range(right.position.y, left.position.y);
-            Instantiate(prefab, newPos, Quaternion.identity);
+            newFlyingNinja = Instantiate(prefab, newPos, Quaternion.identity);
+            if (rightOrLeft)
+                newFlyingNinja.GetComponent<SpriteRenderer>().flipX = false;
+            if (!rightOrLeft)
+                newFlyingNinja.GetComponent<SpriteRenderer>().flipX = true;
+
+            newFlyingNinja.GetComponent<flyingNinja>().wayPointLeft = left;
+            newFlyingNinja.GetComponent<flyingNinja>().wayPointRight = right;
         }
 
     }

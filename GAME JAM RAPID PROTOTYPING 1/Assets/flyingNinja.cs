@@ -10,6 +10,7 @@ public class flyingNinja : MonoBehaviour
     public float playerDist;
 
     private Rigidbody2D rb2d;
+    public SpriteRenderer sp;
     [Header("State Machine")]
     [SerializeField]
     public State StartState;
@@ -32,9 +33,10 @@ public class flyingNinja : MonoBehaviour
     private void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        sp = GetComponent<SpriteRenderer>();
         player = AudioManager.Instance.Player.transform;
-        wayPointLeft = AudioManager.Instance.wayPointLeft;
-        wayPointRight = AudioManager.Instance.wayPointRight;
+        //wayPointLeft = AudioManager.Instance.wayPointLeft;
+        //wayPointRight = AudioManager.Instance.wayPointRight;
 
         CurrentState = StartState;
     }
@@ -114,10 +116,12 @@ public class flyingNinja : MonoBehaviour
         if (transform.position.x < wayPointLeft.transform.position.x)
         {
             speedMultiplier = 1;
+            sp.flipX = false;
         }
         else if (transform.position.x > wayPointRight.transform.position.x)
         {
-            speedMultiplier = -1;
+            speedMultiplier = 1;
+            sp.flipX = true;
         }
     }
 

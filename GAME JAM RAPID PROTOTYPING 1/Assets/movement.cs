@@ -72,11 +72,16 @@ public class movement : MonoBehaviour
         LR = GetComponent<LineRenderer>();
     }
 
+    private void FixedUpdate()
+    {
+        movePlayer();
+    }
+
     // Update is called once per frame
     void Update()
     {
+        //movePlayer();
         isgrounded();
-        movePlayer();
         if (Input.GetKey(KeyCode.D))
         {
             SR.flipX = false;
@@ -142,13 +147,20 @@ public class movement : MonoBehaviour
         fHorizontalVelocity += Input.GetAxisRaw("Horizontal");
 
         if (Mathf.Abs(Input.GetAxisRaw("Horizontal")) < 0.01f)
-            fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenStopping, Time.deltaTime * 10f);
+        {
+            fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenStopping, Time.deltaTime * 5f);
+        }
         else if (Mathf.Sign(Input.GetAxisRaw("Horizontal")) != Mathf.Sign(fHorizontalVelocity))
-            fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenTurning, Time.deltaTime * 10f);
+        {
+            fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingWhenTurning, Time.deltaTime * 5f);
+        }
         else
-            fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingBasic, Time.deltaTime * 10f);
+        {
+            fHorizontalVelocity *= Mathf.Pow(1f - fHorizontalDampingBasic, Time.deltaTime * 5f);
+        }
 
-        rigid.velocity = new Vector2(fHorizontalVelocity, rigid.velocity.y);
+        Vector2 moveVec = new Vector2(fHorizontalVelocity, rigid.velocity.y);
+        rigid.velocity = moveVec;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
